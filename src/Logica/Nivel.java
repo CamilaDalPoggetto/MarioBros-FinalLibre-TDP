@@ -41,7 +41,7 @@ public class Nivel {
 			int nroRandom = random.nextInt(max + min) + min;
 
 			Enemigo retorno = decidirEnemigo(nroRandom);
-			retorno.getLabel().setBounds(610, 200, 20, 45);
+			retorno.getLabel().setBounds(600, 200, 20, 45);
 			llEnemigos.add(retorno);
 		}
 	}

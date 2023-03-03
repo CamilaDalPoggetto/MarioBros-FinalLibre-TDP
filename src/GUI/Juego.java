@@ -88,24 +88,11 @@ public class Juego extends JFrame implements KeyListener{
 		}
 	}
 
-	public void ponerBloqueRandom(Bloque b,int nroRandom) {
-		b.getLabel().setBounds(nroRandom, 180, 45, 40);
-		b.getRectangulo().setBounds(b.getLabel().getBounds());
+	public void ponerBloque(Bloque b) {
 		getContentPane().add(b.getLabel());
+		repaint();
 	}
 	
-	/*public void chequearColisiones() {
-		for (Bloque b: nivel.getListaBloques()) {
-			b.getRectangulo().setBounds(b.getLabel().getBounds());
-			Rectangle siguienteBloque = b.getRectangulo();
-			boolean choque = mario.chequearColisiones(siguienteBloque);
-			if (choque) {
-				b.serChocado();
-				nivel.eliminarBloque(b);
-				nivel.sumarPuntaje(b.getPuntaje());
-			}
-		}
-	}*/
 	public void setLabelPuntaje(int pun) {
 		puntaje+=pun;
 		lblPuntaje.setText("Puntaje: " + puntaje);
@@ -117,11 +104,12 @@ public class Juego extends JFrame implements KeyListener{
 	
 	public void moverEnemigos(Enemigo e) {
 		getContentPane().add(e.getLabel());
-		
 	}
 	public void ponerEnemigo(Enemigo e) {
-		e.getLabel().setBounds(610, 200, 45, 40);
+		//e.getLabel().setBounds(610, 200, 45, 40);
 		getContentPane().add(e.getLabel());
+		System.out.println("puse un enemigo con coordenada: " + e.getLabel().getBounds());
+		repaint();
 	}
 
 	public Mario getMario() {

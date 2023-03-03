@@ -23,8 +23,7 @@ public class HiloBloques extends Thread {
 				LinkedList<Bloque> listaAux =  (LinkedList<Bloque>) logicaPrincipal.getNivel().getListaBloques().clone();
 				for (Bloque b:listaAux) {
 					logicaPrincipal.ponerBloqueRandom(b);
-					sleep(5000);
-					System.out.println("puse un bloque");
+					sleep(3000);
 				}
 			}
 			}catch(Exception e) {

@@ -45,8 +45,8 @@ public class PanelPrincipal extends JFrame{
 		
 			HiloBloques hiloBloques = new HiloBloques(logica);
 			hiloBloques.start();
-			//HiloEnemigos hiloEnemigos = new HiloEnemigos(logica);
-			//hiloEnemigos.start();
+			HiloEnemigos hiloEnemigos = new HiloEnemigos(logica);
+			hiloEnemigos.start();
 			//HiloMovimientoE hiloMovimiento = new HiloMovimientoE(logica);
 			//hiloMovimiento.start();
 			

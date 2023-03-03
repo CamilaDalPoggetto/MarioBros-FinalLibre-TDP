@@ -52,16 +52,16 @@ public class Logica {
 			int nroRandom = random.nextInt(max + min) + min;
 
 			nivel.sumarBloques();
-			juegoPrincipal.ponerBloqueRandom(b,nroRandom);
-			
-		}
-	
+			b.getLabel().setBounds(nroRandom, 180, 45, 40);
+			b.getRectangulo().setBounds(b.getLabel().getBounds());
+			juegoPrincipal.ponerBloque(b);
+		}	
 	}
 	
-	public void moverEnemigos() {
-		for(Enemigo e : nivel.getListaEnemigos()) {
+	public void moverEnemigos(Enemigo e) {
+		//for(Enemigo e : nivel.getListaEnemigos()) {
 			JLabel lblAux = e.getLabel();
-			lblAux.setLocation(lblAux.getX()-5, lblAux.getY());
+			lblAux.setBounds(lblAux.getX()-10, lblAux.getY(), lblAux.getWidth(), lblAux.getHeight());
 				
 			e.getRectangulo().setBounds(e.getLabel().getBounds());
 			Rectangle siguienteBloque = e.getRectangulo();
@@ -74,9 +74,13 @@ public class Logica {
 			}	
 
 			juegoPrincipal.ponerEnemigo(e);
-		}
+		//}
 	}
 	public Nivel getNivel() {
 		return nivel;
+	}
+
+	public void ponerEnemigo(Enemigo e) {
+		juegoPrincipal.ponerEnemigo(e);
 	}
 }

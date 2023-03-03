@@ -43,4 +43,7 @@ public class Bloque { //bloque "normal" (no tiene power up ni dinero)
 	public PowerUp getPowerUp() {
 		return null;
 	}
+	public String getNombre() {
+		return ruta;
+	}
 }

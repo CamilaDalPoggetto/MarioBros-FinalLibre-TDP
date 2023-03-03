@@ -4,38 +4,43 @@ import java.awt.Rectangle;
 
 import javax.swing.*;
 
-import GUI.ElementoGrafico;
 
 public class Bloque { //bloque "normal" (no tiene power up ni dinero)
 	
-	protected ElementoGrafico grafico;
 	protected JLabel lblBloque;
 	protected String ruta = "BloqueNormal.png";
 	protected Rectangle rectangulo;
+	protected int puntaje = 5;
 	
 	public Bloque(String ruta) {
-		grafico = new ElementoGrafico(ruta);
 		lblBloque = new JLabel();
 		lblBloque.setIcon(new ImageIcon(ruta));
-		rectangulo = new Rectangle();//x, y, ancho y alto
+		rectangulo = new Rectangle(100, 180, 45, 40);//x, y, ancho y alto
 	}
 	
 	public Bloque() {
-		grafico = new ElementoGrafico(ruta);
 		lblBloque = new JLabel();
 		lblBloque.setIcon(new ImageIcon(ruta));
-		rectangulo = new Rectangle();
+		rectangulo = new Rectangle(100, 180, 45, 40);
+		//puntaje = 5;
 	}
 
-	public ElementoGrafico getGrafico() {
-		return grafico;
-	}
-	
 	public JLabel getLabel() {
 		return lblBloque;
 	}
 	
 	public Rectangle getRectangulo() {
 		return rectangulo;
+	}
+
+	public void serChocado() {
+		lblBloque.setIcon(new ImageIcon(""));
+	}
+	public int getPuntaje() {
+		return puntaje;
+	}
+	
+	public PowerUp getPowerUp() {
+		return null;
 	}
 }

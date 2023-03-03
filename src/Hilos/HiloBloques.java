@@ -1,6 +1,9 @@
 package Hilos;
 
+import java.util.LinkedList;
+
 import GUI.Juego;
+import Logica.Logica;
 import Recursos.Bloque;
 import Recursos.BloqueEspecial;
 
@@ -8,22 +11,24 @@ import Recursos.BloqueEspecial;
 //dichos bloques pueden ser de cualquier tipo
 //solo los crea, y el Juego es el encargado de ubicarlos
 public class HiloBloques extends Thread {
-	protected Juego juegoPrincipal;
+	protected Logica logicaPrincipal;
 	
-	public HiloBloques(Juego juego) {
-		juegoPrincipal = juego;
+	public HiloBloques(Logica logica) {
+		logicaPrincipal = logica;
 	}
 	
 	public void run() {
-		while(true) {
-			try {
-				for (Bloque b:juegoPrincipal.getNivel().getListaBloques()) {
-					juegoPrincipal.ponerBloque(b);
+		try {
+			while(true) {
+				LinkedList<Bloque> listaAux =  (LinkedList<Bloque>) logicaPrincipal.getNivel().getListaBloques().clone();
+				for (Bloque b:listaAux) {
+					logicaPrincipal.ponerBloqueRandom(b);
 					sleep(5000);
+					System.out.println("puse un bloque");
 				}
+			}
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
-	}
 }

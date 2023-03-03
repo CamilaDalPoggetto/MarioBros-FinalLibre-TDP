@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
+import java.util.Random;
 
 import javax.swing.*;
 import Recursos.*;
@@ -14,28 +15,41 @@ import java.awt.Rectangle;
 
 public class Juego extends JFrame implements KeyListener{
 	private Mario mario;
-	private Nivel nivel;
-	private JLabel lblMario;
+	private JLabel lblPuntaje = new JLabel("Puntaje: ");
+	private JLabel lblDinero = new JLabel("Dinero: ");
+	private JLabel lblVidas = new JLabel("Vidas: " + 3);
+	private Logica logica;
 	
+	private int puntaje;
 	public Juego(){
 		getContentPane().setBackground(new Color(135, 206, 235));
 		setSize(600, 450);
-
 		mario = new Mario(10,250);
-		nivel = new Nivel(1);
+		
 		iniciarMario();
 		iniciarFondo();
 		addKeyListener(this);
-		
+		setResizable(false);
 		setVisible(true);
-		//ponerBloque();
+		puntaje = 0;
+		
 	}
-	
+	public void setLogica(Logica logica) {
+		this.logica = logica;
+	}
 	private void iniciarFondo() {
 		JLabel lblLadrillos = new JLabel();
 		lblLadrillos.setBounds(0, 339, 586, 88);
 		lblLadrillos.setIcon(new ImageIcon("Ladrillos.png"));
 		getContentPane().add(lblLadrillos);
+		
+		
+		lblPuntaje.setBounds(192, 10, 145, 13);
+		getContentPane().add(lblPuntaje);
+		lblDinero.setBounds(392, 10, 145, 13);
+		getContentPane().add(lblDinero);
+		lblVidas.setBounds(10, 10, 145, 13);
+		getContentPane().add(lblVidas);
 		
 		/*JLabel lblFondo = new JLabel();
 		lblFondo.setIcon(new ImageIcon("FondoPrincipal.jpg"));
@@ -46,11 +60,9 @@ public class Juego extends JFrame implements KeyListener{
 	private void iniciarMario() {
 		getContentPane().setLayout(null);
 		
-		lblMario = new JLabel();
-		lblMario.setBounds(10, 250, 91, 111);
-		lblMario.setIcon(new ImageIcon("Mario.png"));
-		getContentPane().add(lblMario);
-		mario.getRectangulo().setBounds(lblMario.getBounds());
+		mario.getLabel().setBounds(10, 250, 91, 111);
+		getContentPane().add(mario.getLabel());
+		mario.getRectangulo().setBounds(mario.getLabel().getBounds());
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -61,16 +73,11 @@ public class Juego extends JFrame implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 		if(e.getExtendedKeyCode() == KeyEvent.VK_UP) {
 			mario.saltar();
-			lblMario.setLocation(mario.getX(), mario.getY());
-			mario.getRectangulo().setBounds(lblMario.getBounds());
+			logica.chequearColisiones();
 		}else if (e.getExtendedKeyCode() == KeyEvent.VK_RIGHT) {
 			mario.avanzar();
-			lblMario.setLocation(mario.getX(), mario.getY());
-			mario.getRectangulo().setBounds(lblMario.getBounds());
-		}else if (e.getExtendedKeyCode() == KeyEvent.VK_DOWN) {
+		}else if (e.getExtendedKeyCode() == KeyEvent.VK_LEFT) {
 			mario.retroceder();
-			mario.getRectangulo().setBounds(lblMario.getBounds());
-			lblMario.setLocation(mario.getX(), mario.getY());
 		}
 	}
 
@@ -78,31 +85,46 @@ public class Juego extends JFrame implements KeyListener{
 	public void keyReleased(KeyEvent e) {
 		if(e.getExtendedKeyCode() == KeyEvent.VK_UP) {
 			mario.bajar();
-			lblMario.setLocation(mario.getX(), mario.getY());
-			mario.getRectangulo().setBounds(lblMario.getBounds());
-			
 		}
 	}
 
-	public void ponerBloque(Bloque b) {
-		b.getLabel().setBounds(610, 180, 45, 40);
+	public void ponerBloqueRandom(Bloque b,int nroRandom) {
+		b.getLabel().setBounds(nroRandom, 180, 45, 40);
+		b.getRectangulo().setBounds(b.getLabel().getBounds());
 		getContentPane().add(b.getLabel());
 	}
 	
-	public void moverBloque() {
+	/*public void chequearColisiones() {
 		for (Bloque b: nivel.getListaBloques()) {
-			JLabel lblAux = b.getLabel();
+			b.getRectangulo().setBounds(b.getLabel().getBounds());
 			Rectangle siguienteBloque = b.getRectangulo();
-			mario.chequearColisiones(siguienteBloque);
-			
-			lblAux.setLocation(lblAux.getX()-5, lblAux.getY());
-			getContentPane().add(lblAux);
-			siguienteBloque.setBounds(lblAux.getBounds());
-			
+			boolean choque = mario.chequearColisiones(siguienteBloque);
+			if (choque) {
+				b.serChocado();
+				nivel.eliminarBloque(b);
+				nivel.sumarPuntaje(b.getPuntaje());
+			}
 		}
+	}*/
+	public void setLabelPuntaje(int pun) {
+		puntaje+=pun;
+		lblPuntaje.setText("Puntaje: " + puntaje);
+		
+	}
+	public void setLabelVidas() {
+		lblVidas.setText("Vidas: " + mario.getVidas());
+	}
+	
+	public void moverEnemigos(Enemigo e) {
+		getContentPane().add(e.getLabel());
+		
+	}
+	public void ponerEnemigo(Enemigo e) {
+		e.getLabel().setBounds(610, 200, 45, 40);
+		getContentPane().add(e.getLabel());
 	}
 
-	public Nivel getNivel() {
-		return nivel;
+	public Mario getMario() {
+		return mario;
 	}
 }

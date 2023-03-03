@@ -1,12 +1,12 @@
 package GUI;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import Hilos.HiloBloques;
-import Hilos.HiloMovimiento;
+import Hilos.*;
+import Logica.Logica;
+import Logica.Nivel;
 
 public class PanelPrincipal extends JFrame{
 	private JButton btnJugar;
@@ -40,10 +40,16 @@ public class PanelPrincipal extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			setVisible(false);
 			Juego juego = new Juego();
-			HiloBloques hiloBloques = new HiloBloques(juego);
+			Nivel nivel = new Nivel();
+			Logica logica = new Logica(juego, nivel);
+		
+			HiloBloques hiloBloques = new HiloBloques(logica);
 			hiloBloques.start();
-			HiloMovimiento hiloMovimiento = new HiloMovimiento(juego);
-			hiloMovimiento.start();
+			//HiloEnemigos hiloEnemigos = new HiloEnemigos(logica);
+			//hiloEnemigos.start();
+			//HiloMovimientoE hiloMovimiento = new HiloMovimientoE(logica);
+			//hiloMovimiento.start();
+			
 		}
 	}
 	

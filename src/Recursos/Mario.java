@@ -3,22 +3,22 @@ package Recursos;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import java.util.Timer;
-
+import javax.swing.Timer;
 public class Mario {
 	
 	protected int x, y, direccion, velocidad;
 	protected Rectangle rectangulo;
 	protected String rutaImagen, rutaAlternativa;
 	protected JLabel lblMario, lblAtaque;
-	protected boolean vivo;
-	protected Timer temporizador;
+	protected boolean vivo, inmortal;
 	
 	public Mario(int x, int y) {
 		rutaImagen = "Mario.png";
 		rutaAlternativa = "Luigi2.png";
 		
 		vivo = true;
+		inmortal = false;
+		
 		this.x = x;
 		this.y = y;
 		velocidad=5;
@@ -100,7 +100,16 @@ public class Mario {
 		velocidad = 10;
 	}
 	public void visitPowerUp2() {
-		System.out.println("powerup2");
+		inmortal = true;
+		lblMario.setIcon(new ImageIcon("MarioConEscudo.png"));
+		Timer timer = new Timer(10000, evt -> {
+		    inmortal = false;
+			lblMario.setIcon(new ImageIcon("Mario.png"));
+		});
+		
+		timer.setRepeats(false);
+		timer.start();
+		
 	}
 	public void  visitPowerUp3() {
 		lblMario.setIcon(new ImageIcon(rutaAlternativa));
@@ -116,5 +125,11 @@ public class Mario {
 	public void morir() {
 		vivo = false;
 	}
+
+
+	public boolean isInmortal() {
+		return inmortal;
+	}
+
 
 }

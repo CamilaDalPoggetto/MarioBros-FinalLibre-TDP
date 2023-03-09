@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import javax.swing.JLabel;
+import javax.swing.Timer;
 
 import GUI.Juego;
 import Recursos.Bloque;
@@ -75,18 +76,17 @@ public class Logica {
 		}	
 	}
 	
-	public synchronized void moverEnemigos() {
+	public void moverEnemigos() {
 		LinkedList<Enemigo> listaAux = (LinkedList<Enemigo>) nivel.getListaEnemigos().clone();
 		for(Enemigo e : listaAux) {
 			e.mover();
 			siguienteEnemigo = e;
 			Rectangle siguienteEnemigo = e.getRectangulo();
 			
-			if (mario.chequearColisiones(siguienteEnemigo)) {
+			if (!mario.isInmortal() && mario.chequearColisiones(siguienteEnemigo)) {
 				e.morir();
 				mario.morir();
 				juegoPrincipal.gameOver();
-				System.out.println("en game over. mario vivo:" + mario.isVivo());
 			}
 			juegoPrincipal.ponerEnemigo(e);
 		}
@@ -110,6 +110,7 @@ public class Logica {
 	public void marioAtaque() {
 		if(siguienteEnemigo != null) {
 			siguienteEnemigo.morir();
+			juegoPrincipal.setLabelPuntaje(10);
 			nivel.eliminarEnemigo(siguienteEnemigo);
 		}
 	}

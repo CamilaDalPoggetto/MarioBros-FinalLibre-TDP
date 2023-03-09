@@ -47,7 +47,7 @@ public class Nivel {
 		Enemigo retorno = new Enemigo("");
 		switch(random) {
 		case 0:
-			retorno = new Tortuga();
+			retorno = new Bullet();
 			break;
 		case 1:
 			retorno = new HongoMalo();

@@ -17,11 +17,9 @@ import java.awt.Font;
 public class Juego extends JFrame implements KeyListener{
 	private Mario mario;
 	private JLabel lblPuntaje = new JLabel("Puntaje: ");
-	//private JLabel lblVidas = new JLabel();
 	private JLabel lblNivel = new JLabel("Nivel: " + 1);
 	private Logica logica;
 	private JLabel lblLadrillos = new JLabel();
-	//private JLabel lblAtaqueMario = new JLabel();
 	private JLabel lblMastil = new JLabel();
 	private int puntaje;
 	
@@ -35,7 +33,6 @@ public class Juego extends JFrame implements KeyListener{
 		addKeyListener(this);
 		setResizable(false);
 		setVisible(true);
-		//setLabelVidas();
 		puntaje = 0;
 		
 		
@@ -53,12 +50,7 @@ public class Juego extends JFrame implements KeyListener{
 		lblPuntaje.setFont(new Font("Rockwell Condensed", Font.BOLD, 24));
 		lblPuntaje.setBounds(192, 10, 145, 23);
 		getContentPane().add(lblPuntaje);
-	
-		/*
-		lblVidas.setForeground(new Color(255, 255, 255));
-		lblVidas.setFont(new Font("Rockwell Condensed", Font.BOLD, 24));
-		lblVidas.setBounds(396, 10, 145, 23);
-		getContentPane().add(lblVidas);*/
+		
 		lblNivel.setForeground(new Color(255, 255, 255));
 		lblNivel.setFont(new Font("Rockwell Condensed", Font.BOLD, 24));
 		lblNivel.setBounds(10, 9, 77, 24);
@@ -103,13 +95,11 @@ public class Juego extends JFrame implements KeyListener{
 	}
 	private void ataque() {
 		JLabel lblAtaqueMario = new JLabel();
-		//lblAtaqueMario.setIcon(new ImageIcon("Laser.gif"));
 		lblAtaqueMario.setBounds(mario.getLabel().getX()+50, mario.getLabel().getY()+50, getWidth(), 10); 
 		lblAtaqueMario.setOpaque(true);
 		lblAtaqueMario.setBackground(Color.red);
 		getContentPane().add(lblAtaqueMario);
-		
-		Timer timer = new Timer(2000, evt -> {
+		Timer timer = new Timer(250, evt -> {
 		    lblAtaqueMario.setVisible(false);
 		});
 		timer.setRepeats(false);
@@ -127,11 +117,7 @@ public class Juego extends JFrame implements KeyListener{
 		lblPuntaje.setText("Puntaje: " + puntaje);
 		
 	}
-	/*
-	public void setLabelVidas() {
-		lblVidas.setText("Vidas: " + mario.getVidas());
-	}
-	*/
+	
 	public void moverEnemigos(Enemigo e) {
 		getContentPane().add(e.getLabel());
 	}
@@ -156,7 +142,6 @@ public class Juego extends JFrame implements KeyListener{
 		
 		if(mario.chequearColisiones(rectanguloMastil)) {
 			retorno = true;
-			System.out.println("pase de nivel");
 			lblNivel.setText("Nivel: " + 2);
 			mario.setX(10);
 			mario.setY(260);
@@ -178,7 +163,7 @@ public class Juego extends JFrame implements KeyListener{
 		lblThankYou.setBounds(50, 100, 450, 36);
 		lblYouWin.setBounds(60, 150, 450, 74);
 
-		lblPuntaje.setBounds(100, 200, 200, 40);
+		lblPuntaje.setBounds(200, 350, 200, 40);
 		getContentPane().add(lblYouWin);
 		getContentPane().add(lblThankYou);
 		getContentPane().add(lblPuntaje);

@@ -9,21 +9,20 @@ import Recursos.*;
 public class Nivel {
 	
 	//contiene una lista de Bloque, que pueden o no tener power ups o ser especiales
-	//tambien tiene una lista de enemigos (pero no llegamos todavia)
+	//tambien tiene una lista de enemigos
 	protected LinkedList<Bloque> llBloques;
 	protected LinkedList<Enemigo> llEnemigos;
 	
 	protected int cantBloques;
-	protected int puntaje;
+	protected int nroNivel;
 	
-	public Nivel() {
+	public Nivel(int nroNivel) {
 		llBloques = new LinkedList<Bloque>();
 		llEnemigos = new LinkedList<Enemigo>();
 
-		llenarListaEnemigos();
+		this.nroNivel = nroNivel;
 		llenarListaBloques();
 		cantBloques = 0;
-		puntaje = 0;
 	}
 	public void sumarBloques() {
 		cantBloques++;
@@ -32,19 +31,18 @@ public class Nivel {
 		return cantBloques;
 	}
 	
-	private void llenarListaEnemigos() {
+	public void crearEnemigo() {
 		Random random = new Random();
 		//0 = tortuga, 1 = hongoMalo
-		while(llEnemigos.size() < 10) {
-			int max = 2;
-			int min = 0;
-			int nroRandom = random.nextInt(max + min) + min;
-
-			Enemigo retorno = decidirEnemigo(nroRandom);
-			retorno.getLabel().setBounds(600, 200, 20, 45);
-			llEnemigos.add(retorno);
-		}
+		int max = 2;
+		int min = 0;
+		int nroRandom = random.nextInt(max + min) + min;
+		Enemigo retorno = decidirEnemigo(nroRandom);
+		retorno.getLabel().setBounds(600, 300, 45, 45);
+		llEnemigos.add(retorno);
+		System.out.println("cree un enemigo: " + llEnemigos.size());
 	}
+	
 	private Enemigo decidirEnemigo(int random) {
 		Enemigo retorno = new Enemigo("");
 		switch(random) {
@@ -71,10 +69,10 @@ public class Nivel {
 	}
 	
 	private Bloque decidirBloque(int random) {
-		Bloque retorno = new Bloque();
+		Bloque retorno = new Bloque(nroNivel);
 		switch(random) {
 		case 0:
-			retorno = new Bloque();
+			retorno = new Bloque(nroNivel);
 			break;
 		case 1:
 			retorno = new BloqueEspecial();
@@ -88,20 +86,25 @@ public class Nivel {
 	}
 
 	public void eliminarBloque(Bloque b) {
-		//recorrer la lista hasta encontrar el bloque y eliminarlo
 		LinkedList<Bloque> listaAux = (LinkedList<Bloque>) llBloques;
 		listaAux.remove(b);
+		cantBloques--;
 		llBloques = listaAux;
 	}
 	
-	public void sumarPuntaje(int p) {
-		puntaje+=p;
-	}
-	public int getPuntaje() {
-		return puntaje;
-	}
 	public LinkedList<Enemigo> getListaEnemigos() {
 		return llEnemigos;
 	}
+	public void eliminarEnemigo(Enemigo e) {
+		LinkedList<Enemigo> listaAux = (LinkedList<Enemigo>) llEnemigos;
+		listaAux.remove(e);
+		llEnemigos = listaAux;
+	}
+	public void limpiarListaEnemigos() {
+		llEnemigos = null;
+	}
 	
+	public int getNroNivel() {
+		return nroNivel;
+	}
 }

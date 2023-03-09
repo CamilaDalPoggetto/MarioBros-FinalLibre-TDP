@@ -1,32 +1,46 @@
 package Recursos;
 
 import java.awt.Rectangle;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import java.util.Timer;
 
 public class Mario {
 	
-	protected int x, y, direccion;
+	protected int x, y, direccion, velocidad;
 	protected Rectangle rectangulo;
-	protected String rutaImagen;
-	protected String rutaAlternativa;
-	protected int velocidad;
-	protected int vidas;
-	protected JLabel lblMario;
+	protected String rutaImagen, rutaAlternativa;
+	protected JLabel lblMario, lblAtaque;
+	protected boolean vivo;
+	protected Timer temporizador;
 	
 	public Mario(int x, int y) {
 		rutaImagen = "Mario.png";
-		rutaAlternativa = "Luigi.png";
+		rutaAlternativa = "Luigi2.png";
+		
+		vivo = true;
 		this.x = x;
 		this.y = y;
 		velocidad=5;
-		vidas = 3;
 		lblMario = new JLabel();
 		lblMario.setIcon(new ImageIcon(rutaImagen));
+		lblMario.setBounds(x, y, 91, 110);
+		
+		lblAtaque = new JLabel();
+		lblAtaque.setIcon(new ImageIcon("Laser2.gif"));
+		
 		rectangulo = new Rectangle();
+		rectangulo.setBounds(lblMario.getBounds());
 	}
 	
+	
+	public boolean isVivo() {
+		return vivo;
+	}
+	
+	public JLabel getLabelAtaque() {
+		return lblAtaque;
+	}
 	public int getX() {
 		return x;
 	}
@@ -38,6 +52,9 @@ public class Mario {
 	public void setX(int x) {
 		this.x = x;
 	}
+	public void setY(int y) {
+		this.y = y;
+	}
 	public String getRutaImagen() {
 		return rutaImagen;
 	}
@@ -46,45 +63,44 @@ public class Mario {
 	}
 	
 	public void avanzar() {
-		this.x = x+velocidad;
-		rectangulo.setLocation(x, y);
-		lblMario.setBounds(rectangulo);
+		if (x < 500) {
+			this.x = x+velocidad;
+			rectangulo.setLocation(x, y);
+			lblMario.setBounds(rectangulo);
+		}
 	}
 	public void retroceder() {
-		this.x = x-velocidad;
-		rectangulo.setLocation(x, y);
-		lblMario.setBounds(rectangulo);
+		if (x > 0) {
+			this.x = x-velocidad;
+			rectangulo.setLocation(x, y);
+			lblMario.setBounds(rectangulo);
+		}
 	}
 	public void saltar() {
-		this.y = y-70;
+		this.y = y-130;
 		rectangulo.setLocation(x, y);
 		lblMario.setBounds(rectangulo);
 	}
 	public void bajar() {
-		this.y = y+70;
+		this.y = y+130;
 		rectangulo.setLocation(x, y);
 		lblMario.setBounds(rectangulo);
 	}
+	
 	public boolean chequearColisiones(Rectangle rectangulo) {
+		
 		boolean toReturn = false;
 		if (this.rectangulo.intersects(rectangulo)) {
-			System.out.println("me choque");
 			toReturn = true;
 		}
 		return toReturn;
-	}
-	public void morir() {
-		
-	}
-	public int getVidas() {
-		return vidas;
 	}
 
 	public void  visitPowerUp1() {
 		velocidad = 10;
 	}
 	public void visitPowerUp2() {
-		vidas++;
+		System.out.println("powerup2");
 	}
 	public void  visitPowerUp3() {
 		lblMario.setIcon(new ImageIcon(rutaAlternativa));
@@ -96,4 +112,9 @@ public class Mario {
 	public JLabel getLabel() {
 		return lblMario;
 	}
+
+	public void morir() {
+		vivo = false;
+	}
+
 }

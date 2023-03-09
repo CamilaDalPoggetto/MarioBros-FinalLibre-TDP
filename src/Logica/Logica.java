@@ -15,6 +15,8 @@ public class Logica {
 	private Juego juegoPrincipal;
 	private Nivel nivel;
 	private Mario mario;
+	private Enemigo siguienteEnemigo;
+	
 	
 	public Logica(Juego juego, Nivel nivel) {
 		juegoPrincipal = juego;
@@ -33,16 +35,31 @@ public class Logica {
 				b.serChocado();
 				nivel.eliminarBloque(b);
 				juegoPrincipal.setLabelPuntaje(b.getPuntaje());
-				System.out.println("puntaje " + b.getPuntaje());
 				if(b.getPowerUp() != null) {
+					System.out.println("Power up de tipo: " + b.getPowerUp().getClass());					
 					b.getPowerUp().accept(mario);
-					juegoPrincipal.setLabelVidas();
-					System.out.println("tipo power up: " + b.getPowerUp().getClass());
+					//juegoPrincipal.setLabelVidas();
 				}
 			}
+			
 		}
-		
 	}
+		
+	public void nextLevel() {
+		LinkedList<Bloque> listaAux = (LinkedList<Bloque>) nivel.getListaBloques().clone();
+		
+		if (listaAux.isEmpty() && juegoPrincipal.nextLevel()) {
+			if(nivel.getNroNivel() == 1) {
+				nivel.limpiarListaEnemigos();
+				nivel = new Nivel(2);
+			}else {
+				mario.morir();
+				juegoPrincipal.fin();
+
+			}
+		}
+	}
+
 	public void ponerBloqueRandom(Bloque b) {
 		if (nivel.getCantBloques() < 5) { //para que haya solo 5 bloques en pantalla a la vez
 			
@@ -52,35 +69,48 @@ public class Logica {
 			int nroRandom = random.nextInt(max + min) + min;
 
 			nivel.sumarBloques();
-			b.getLabel().setBounds(nroRandom, 180, 45, 40);
+			b.getLabel().setBounds(nroRandom, 140, 45, 40);
 			b.getRectangulo().setBounds(b.getLabel().getBounds());
 			juegoPrincipal.ponerBloque(b);
 		}	
 	}
 	
-	public void moverEnemigos(Enemigo e) {
-		//for(Enemigo e : nivel.getListaEnemigos()) {
-			JLabel lblAux = e.getLabel();
-			lblAux.setBounds(lblAux.getX()-10, lblAux.getY(), lblAux.getWidth(), lblAux.getHeight());
-				
-			e.getRectangulo().setBounds(e.getLabel().getBounds());
-			Rectangle siguienteBloque = e.getRectangulo();
-			boolean choque = mario.chequearColisiones(siguienteBloque);
+	public synchronized void moverEnemigos() {
+		LinkedList<Enemigo> listaAux = (LinkedList<Enemigo>) nivel.getListaEnemigos().clone();
+		for(Enemigo e : listaAux) {
+			e.mover();
+			siguienteEnemigo = e;
+			Rectangle siguienteEnemigo = e.getRectangulo();
 			
-			if (choque) {
-				//b.serChocado();
-				//nivel.eliminarBloque(b);
-				System.out.println("choque con un enemigo");
-			}	
-
+			if (mario.chequearColisiones(siguienteEnemigo)) {
+				e.morir();
+				mario.morir();
+				juegoPrincipal.gameOver();
+				System.out.println("en game over. mario vivo:" + mario.isVivo());
+			}
 			juegoPrincipal.ponerEnemigo(e);
-		//}
+		}
 	}
+	
 	public Nivel getNivel() {
 		return nivel;
 	}
-
+	public Mario getMario() {
+		return mario;
+	}
+	/*
 	public void ponerEnemigo(Enemigo e) {
 		juegoPrincipal.ponerEnemigo(e);
+	}
+*/
+	public void crearEnemigo() {
+		nivel.crearEnemigo();
+	}
+
+	public void marioAtaque() {
+		if(siguienteEnemigo != null) {
+			siguienteEnemigo.morir();
+			nivel.eliminarEnemigo(siguienteEnemigo);
+		}
 	}
 }

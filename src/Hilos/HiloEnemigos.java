@@ -7,30 +7,28 @@ import Logica.Logica;
 import Recursos.Bloque;
 import Recursos.Enemigo;
 
-public class HiloEnemigos extends Thread { //por ahora chequea las colisiones
+public class HiloEnemigos extends Thread { //crea enemigos de a uno
 	protected Logica logicaPrincipal;
-	
-	public HiloEnemigos(Logica logica) {
+	//protected HiloMovimientoE hiloMovimiento;
+	public HiloEnemigos(Logica logica, HiloMovimientoE hilo) {
 		logicaPrincipal = logica;
+		//hiloMovimiento = hilo;
 	}
 	
 	public void run() {
-		while(true) {
+		while(logicaPrincipal.getMario().isVivo()) {
 			try {
-				LinkedList<Enemigo> listaAux =  (LinkedList<Enemigo>) logicaPrincipal.getNivel().getListaEnemigos().clone();
-				for (Enemigo e:listaAux) {
-					sleep(10000);
-					logicaPrincipal.ponerEnemigo(e);
-					logicaPrincipal.moverEnemigos(e);
-					System.out.println("puse un enemigo");
-					sleep(10000);
-				}
+				//LinkedList<Enemigo> listaAux =  (LinkedList<Enemigo>) logicaPrincipal.getNivel().getListaEnemigos().clone();
+				//for (Enemigo e:listaAux) {
+					sleep(8000);
+					logicaPrincipal.crearEnemigo();
+					
+					//hiloMovimiento.run(e);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
 		}
 	}
-
+	}
 }
 

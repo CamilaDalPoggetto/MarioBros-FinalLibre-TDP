@@ -6,7 +6,6 @@ import javax.swing.ImageIcon;
 
 public class BloqueEspecial extends Bloque{ //es un bloque, que ademas tiene dinero o power up
 	
-	 //o tiene power up, o tiene dinero
 	protected static String ruta = "BloqueEspecial.png";
 	protected PowerUp powerUp;
 	
@@ -26,9 +25,10 @@ public class BloqueEspecial extends Bloque{ //es un bloque, que ademas tiene din
 		 */
 		
 		Random random = new Random();
-		int max = 3;
+		int max = 2;
 		int min = 1;
 		int nroRandom = random.nextInt(max + min) + min;
+		System.out.println("nro random: " + nroRandom);
 		decidirPowerUp(nroRandom);
 	}
 	
@@ -38,10 +38,10 @@ public class BloqueEspecial extends Bloque{ //es un bloque, que ademas tiene din
 			powerUp = new PowerUp1(); //velocidad
 			break;
 		case 2:
-			powerUp = new PowerUp2(); //crecer
+			powerUp = new PowerUp2(); //+1 vida
 			break;
 		case 3:
-			powerUp = new PowerUp3(); //balas
+			powerUp = new PowerUp3(); //cambio de skin
 			break;
 		}
 	}

@@ -14,12 +14,11 @@ public class HiloMovimientoE extends Thread { //por ahora chequea las colisiones
 
 	public void run() {
 		try {
-			while(true) {
-				LinkedList<Enemigo> listaAux = (LinkedList<Enemigo>) logicaPrincipal.getNivel().getListaEnemigos().clone();
-				for (Enemigo e: listaAux) {
-					logicaPrincipal.moverEnemigos(e);
-					sleep(0);
-				}
+			while(logicaPrincipal.getMario().isVivo()) {
+				//LinkedList<Enemigo> listaAux = (LinkedList<Enemigo>) logicaPrincipal.getNivel().getListaEnemigos().clone();
+				logicaPrincipal.moverEnemigos();
+				logicaPrincipal.nextLevel();
+				sleep(50);
 			}
 		} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block

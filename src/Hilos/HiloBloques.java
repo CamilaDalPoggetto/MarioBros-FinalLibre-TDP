@@ -19,12 +19,15 @@ public class HiloBloques extends Thread {
 	
 	public void run() {
 		try {
-			while(true) {
+			while(logicaPrincipal.getMario().isVivo()) {
 				LinkedList<Bloque> listaAux =  (LinkedList<Bloque>) logicaPrincipal.getNivel().getListaBloques().clone();
 				for (Bloque b:listaAux) {
-					logicaPrincipal.ponerBloqueRandom(b);
-					sleep(3000);
+					if (logicaPrincipal.getMario().isVivo()) {
+						logicaPrincipal.ponerBloqueRandom(b);
+						sleep(5000);
+					}
 				}
+				
 			}
 			}catch(Exception e) {
 				e.printStackTrace();

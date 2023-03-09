@@ -16,9 +16,12 @@ public class PanelPrincipal extends JFrame{
 		super("MarioBros");
 		setSize(600, 450);
 		
-		btnJugar = new JButton("Jugar");
+		btnJugar = new JButton();
+		btnJugar.setFocusPainted(false);
+		btnJugar.setBorderPainted(false);
+		btnJugar.setContentAreaFilled(false);
 		btnJugar.setIcon(new ImageIcon("BotonJugar.png"));
-		btnJugar.setBounds(365, 259, 90, 32);
+		btnJugar.setBounds(350, 259, 160, 40);
 		
 		lblFondo = new JLabel();
 		lblFondo.setBounds(0, 407, 585, -407);
@@ -40,15 +43,16 @@ public class PanelPrincipal extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			setVisible(false);
 			Juego juego = new Juego();
-			Nivel nivel = new Nivel();
+			Nivel nivel = new Nivel(1);
 			Logica logica = new Logica(juego, nivel);
 		
 			HiloBloques hiloBloques = new HiloBloques(logica);
 			hiloBloques.start();
-			HiloEnemigos hiloEnemigos = new HiloEnemigos(logica);
+			HiloMovimientoE hiloMovimiento = new HiloMovimientoE(logica);
+			hiloMovimiento.start();
+			HiloEnemigos hiloEnemigos = new HiloEnemigos(logica, hiloMovimiento);
 			hiloEnemigos.start();
-			//HiloMovimientoE hiloMovimiento = new HiloMovimientoE(logica);
-			//hiloMovimiento.start();
+			//
 			
 		}
 	}

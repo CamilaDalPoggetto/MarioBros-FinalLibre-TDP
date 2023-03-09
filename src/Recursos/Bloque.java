@@ -9,20 +9,24 @@ public class Bloque { //bloque "normal" (no tiene power up ni dinero)
 	
 	protected JLabel lblBloque;
 	protected String ruta = "BloqueNormal.png";
+	protected String rutaAlternativa = "BloqueNormalAzul.png";
 	protected Rectangle rectangulo;
 	protected int puntaje = 5;
 	
 	public Bloque(String ruta) {
 		lblBloque = new JLabel();
 		lblBloque.setIcon(new ImageIcon(ruta));
-		rectangulo = new Rectangle(100, 180, 45, 40);//x, y, ancho y alto
+		rectangulo = new Rectangle(100, 140, 45, 40);//x, y, ancho y alto
 	}
 	
-	public Bloque() {
+	public Bloque(int nroNivel) {
 		lblBloque = new JLabel();
-		lblBloque.setIcon(new ImageIcon(ruta));
-		rectangulo = new Rectangle(100, 180, 45, 40);
-		//puntaje = 5;
+		if (nroNivel == 1){
+			lblBloque.setIcon(new ImageIcon(ruta));
+		}else {
+			lblBloque.setIcon(new ImageIcon(rutaAlternativa));
+		}
+		rectangulo = new Rectangle(100, 140, 45, 40);
 	}
 
 	public JLabel getLabel() {

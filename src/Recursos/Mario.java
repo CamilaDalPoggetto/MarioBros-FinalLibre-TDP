@@ -77,9 +77,11 @@ public class Mario {
 		}
 	}
 	public void saltar() {
-		this.y = y-130;
-		rectangulo.setLocation(x, y);
-		lblMario.setBounds(rectangulo);
+		if (y>140) {
+			this.y = y-130;
+			rectangulo.setLocation(x, y);
+			lblMario.setBounds(rectangulo);
+		}
 	}
 	public void bajar() {
 		this.y = y+130;

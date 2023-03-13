@@ -37,9 +37,7 @@ public class Logica {
 				nivel.eliminarBloque(b);
 				juegoPrincipal.setLabelPuntaje(b.getPuntaje());
 				if(b.getPowerUp() != null) {
-					System.out.println("Power up de tipo: " + b.getPowerUp().getClass());					
 					b.getPowerUp().accept(mario);
-					//juegoPrincipal.setLabelVidas();
 				}
 			}
 			
@@ -51,7 +49,7 @@ public class Logica {
 		
 		if (listaAux.isEmpty() && juegoPrincipal.nextLevel()) {
 			if(nivel.getNroNivel() == 1) {
-				nivel.limpiarListaEnemigos();
+				nivel.limpiarListEnemigos();
 				nivel = new Nivel(2);
 			}else {
 				mario.morir();
@@ -70,7 +68,7 @@ public class Logica {
 			int nroRandom = random.nextInt(max + min) + min;
 
 			nivel.sumarBloques();
-			b.getLabel().setBounds(nroRandom, 140, 45, 40);
+			b.getLabel().setBounds(nroRandom, 210, 45, 40);
 			b.getRectangulo().setBounds(b.getLabel().getBounds());
 			juegoPrincipal.ponerBloque(b);
 		}	
@@ -98,11 +96,6 @@ public class Logica {
 	public Mario getMario() {
 		return mario;
 	}
-	/*
-	public void ponerEnemigo(Enemigo e) {
-		juegoPrincipal.ponerEnemigo(e);
-	}
-*/
 	public void crearEnemigo() {
 		nivel.crearEnemigo();
 	}
@@ -112,6 +105,7 @@ public class Logica {
 			siguienteEnemigo.morir();
 			juegoPrincipal.setLabelPuntaje(10);
 			nivel.eliminarEnemigo(siguienteEnemigo);
+			siguienteEnemigo = null;
 		}
 	}
 }

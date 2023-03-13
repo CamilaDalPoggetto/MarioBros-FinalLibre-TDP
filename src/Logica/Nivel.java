@@ -38,9 +38,8 @@ public class Nivel {
 		int min = 0;
 		int nroRandom = random.nextInt(max + min) + min;
 		Enemigo retorno = decidirEnemigo(nroRandom);
-		retorno.getLabel().setBounds(600, 300, 45, 45);
+		retorno.getLabel().setBounds(600, 400, 45, 45);
 		llEnemigos.add(retorno);
-		System.out.println("cree un enemigo: " + llEnemigos.size());
 	}
 	
 	private Enemigo decidirEnemigo(int random) {
@@ -55,10 +54,11 @@ public class Nivel {
 		}
 		return retorno;
 	}
+	
 	private void llenarListaBloques() {
 		Random random = new Random();
 		//0 = normal, 1 = especial
-		while(llBloques.size() < 10) {
+		while(llBloques.size() < 5) {
 			int max = 2;
 			int min = 0;
 			int nroRandom = random.nextInt(max + min) + min;
@@ -100,11 +100,10 @@ public class Nivel {
 		listaAux.remove(e);
 		llEnemigos = listaAux;
 	}
-	public void limpiarListaEnemigos() {
-		llEnemigos = null;
-	}
-	
 	public int getNroNivel() {
 		return nroNivel;
+	}
+	public void limpiarListEnemigos() {
+		llEnemigos = null;
 	}
 }

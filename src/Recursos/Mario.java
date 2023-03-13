@@ -9,7 +9,7 @@ public class Mario {
 	protected int x, y, direccion, velocidad;
 	protected Rectangle rectangulo;
 	protected String rutaImagen, rutaAlternativa;
-	protected JLabel lblMario, lblAtaque;
+	protected JLabel lblMario;
 	protected boolean vivo, inmortal;
 	
 	public Mario(int x, int y) {
@@ -25,10 +25,6 @@ public class Mario {
 		lblMario = new JLabel();
 		lblMario.setIcon(new ImageIcon(rutaImagen));
 		lblMario.setBounds(x, y, 91, 110);
-		
-		lblAtaque = new JLabel();
-		lblAtaque.setIcon(new ImageIcon("Laser2.gif"));
-		
 		rectangulo = new Rectangle();
 		rectangulo.setBounds(lblMario.getBounds());
 	}
@@ -36,10 +32,6 @@ public class Mario {
 	
 	public boolean isVivo() {
 		return vivo;
-	}
-	
-	public JLabel getLabelAtaque() {
-		return lblAtaque;
 	}
 	public int getX() {
 		return x;
@@ -127,7 +119,6 @@ public class Mario {
 	public void morir() {
 		vivo = false;
 	}
-
 
 	public boolean isInmortal() {
 		return inmortal;

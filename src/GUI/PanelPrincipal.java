@@ -39,7 +39,6 @@ public class PanelPrincipal extends JFrame{
 	}
 	
 	class OyenteJugar implements ActionListener {
-		@Override
 		public void actionPerformed(ActionEvent e) {
 			setVisible(false);
 			Juego juego = new Juego();
@@ -52,7 +51,6 @@ public class PanelPrincipal extends JFrame{
 			hiloMovimiento.start();
 			HiloEnemigos hiloEnemigos = new HiloEnemigos(logica, hiloMovimiento);
 			hiloEnemigos.start();
-			//
 			
 		}
 	}

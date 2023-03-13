@@ -9,7 +9,7 @@ import Recursos.BloqueEspecial;
 
 //Hilo que va a generar los bloques cada cierto tiempo
 //dichos bloques pueden ser de cualquier tipo
-//solo los crea, y el Juego es el encargado de ubicarlos
+//solo los crea, y el Juego es el encargado de graficarlos
 public class HiloBloques extends Thread {
 	protected Logica logicaPrincipal;
 	

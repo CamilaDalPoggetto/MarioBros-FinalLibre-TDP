@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import javax.swing.*;
 
 
-public class Bloque { //bloque "normal" (no tiene power up ni dinero)
+public class Bloque { //bloque "normal" (no tiene power up)
 	
 	protected JLabel lblBloque;
 	protected String ruta = "BloqueNormal.png";
@@ -16,7 +16,7 @@ public class Bloque { //bloque "normal" (no tiene power up ni dinero)
 	public Bloque(String ruta) {
 		lblBloque = new JLabel();
 		lblBloque.setIcon(new ImageIcon(ruta));
-		rectangulo = new Rectangle(100, 140, 45, 40);//x, y, ancho y alto
+		rectangulo = new Rectangle(100, 210, 45, 40);//x, y, ancho y alto
 	}
 	
 	public Bloque(int nroNivel) {
@@ -26,7 +26,7 @@ public class Bloque { //bloque "normal" (no tiene power up ni dinero)
 		}else {
 			lblBloque.setIcon(new ImageIcon(rutaAlternativa));
 		}
-		rectangulo = new Rectangle(100, 140, 45, 40);
+		rectangulo = new Rectangle(100, 210, 45, 40);
 	}
 
 	public JLabel getLabel() {

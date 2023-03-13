@@ -3,30 +3,28 @@ package GUI;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.LinkedList;
-import java.util.Random;
-
 import javax.swing.*;
 import Recursos.*;
 import Logica.*;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.Rectangle;
 import java.awt.Font;
 
 public class Juego extends JFrame implements KeyListener{
 	private Mario mario;
 	private JLabel lblPuntaje = new JLabel("Puntaje: ");
-	private JLabel lblNivel = new JLabel("Nivel: " + 1);
+	private JLabel lblNivel = new JLabel("WORLD: 1-1");
 	private Logica logica;
 	private JLabel lblLadrillos = new JLabel();
 	private JLabel lblMastil = new JLabel();
+	private JLabel lblNubes = new JLabel();
+	private JLabel lblLadrillos2 = new JLabel();
 	private int puntaje;
 	
 	public Juego(){ 
-		getContentPane().setBackground(new Color(4, 156, 216));
-		setSize(600, 428);
-		mario = new Mario(10,260);
+		 getContentPane().setBackground(new Color(107, 136, 254));
+		
+		setSize(600, 523);
+		mario = new Mario(10,360);
 		
 		iniciarMario();
 		iniciarFondo();
@@ -42,26 +40,35 @@ public class Juego extends JFrame implements KeyListener{
 	}
 	private void iniciarFondo() {
 
-		lblLadrillos.setBounds(0, 331, 586, 80);
+		lblLadrillos.setBounds(0, 426, 586, 80);
 		lblLadrillos.setIcon(new ImageIcon("Ladrillos.png"));
 		getContentPane().add(lblLadrillos);
 		
 		lblPuntaje.setForeground(new Color(255, 255, 255));
 		lblPuntaje.setFont(new Font("Rockwell Condensed", Font.BOLD, 24));
-		lblPuntaje.setBounds(192, 10, 145, 23);
+		lblPuntaje.setBounds(286, 10, 145, 23);
 		getContentPane().add(lblPuntaje);
 		
 		lblNivel.setForeground(new Color(255, 255, 255));
 		lblNivel.setFont(new Font("Rockwell Condensed", Font.BOLD, 24));
-		lblNivel.setBounds(10, 9, 77, 24);
+		lblNivel.setBounds(10, 9, 195, 24);
 		getContentPane().add(lblNivel);
 		
 		
-		/*JLabel lblFondo = new JLabel();
-		lblFondo.setIcon(new ImageIcon("FondoPrincipal.jpg"));
-		lblFondo.setBounds(0, 0, 600, 450);
+		lblNubes.setBounds(0, 31, 586, 95);
+		lblNubes.setIcon(new ImageIcon("Nubes.png"));
+		getContentPane().add(lblNubes);
+		
+		lblLadrillos2.setBounds(0, 37, 586, 50);
+		lblLadrillos2.setIcon(new ImageIcon("Ladrillos2.0.png"));
+		
+		
+		/*
+		lblFondo.setBounds(0, 0,  586, 391);
+		lblFondo.setIcon(new ImageIcon("Fondo.png"));
 		getContentPane().add(lblFondo);
 		*/
+		repaint();
 	}
 	private void iniciarMario() {
 		getContentPane().setLayout(null);
@@ -97,7 +104,7 @@ public class Juego extends JFrame implements KeyListener{
 		JLabel lblAtaqueMario = new JLabel();
 		lblAtaqueMario.setBounds(mario.getLabel().getX()+50, mario.getLabel().getY()+50, getWidth(), 10); 
 		lblAtaqueMario.setOpaque(true);
-		lblAtaqueMario.setBackground(Color.red);
+		lblAtaqueMario.setIcon(new ImageIcon("Laser.png"));
 		getContentPane().add(lblAtaqueMario);
 		Timer timer = new Timer(250, evt -> {
 		    lblAtaqueMario.setVisible(false);
@@ -115,11 +122,11 @@ public class Juego extends JFrame implements KeyListener{
 	public void setLabelPuntaje(int pun) {
 		puntaje+=pun;
 		lblPuntaje.setText("Puntaje: " + puntaje);
-		
 	}
 	
 	public void moverEnemigos(Enemigo e) {
 		getContentPane().add(e.getLabel());
+		repaint();
 	}
 	public void ponerEnemigo(Enemigo e) {
 		getContentPane().add(e.getLabel());
@@ -131,10 +138,10 @@ public class Juego extends JFrame implements KeyListener{
 	}
 	
 	public boolean nextLevel() {
-		boolean retorno  =false;
+		boolean retorno = false;
 		
 		lblMastil.setIcon(new ImageIcon("Mastil.png"));
-		lblMastil.setBounds(480, 50, 45, 300);
+		lblMastil.setBounds(480, 150, 45, 300);
 		getContentPane().add(lblMastil);
 		
 		Rectangle rectanguloMastil = new Rectangle();
@@ -142,12 +149,15 @@ public class Juego extends JFrame implements KeyListener{
 		
 		if(mario.chequearColisiones(rectanguloMastil)) {
 			retorno = true;
-			lblNivel.setText("Nivel: " + 2);
+			lblNivel.setText("WORLD: 1-2");
 			mario.setX(10);
-			mario.setY(260);
+			mario.setY(360);
 			mario.getLabel().setBounds(mario.getX(), mario.getY(), 91, 111);
 			mario.getRectangulo().setBounds(mario.getLabel().getBounds());
 			lblLadrillos.setIcon(new ImageIcon("Ladrillos2.png"));
+			
+			getContentPane().add(lblLadrillos2);
+			getContentPane().remove(lblNubes);
 			getContentPane().remove(lblMastil);
 			getContentPane().setBackground(Color.BLACK);
 		}

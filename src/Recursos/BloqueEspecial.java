@@ -28,7 +28,6 @@ public class BloqueEspecial extends Bloque{ //es un bloque, que ademas tiene din
 		int max = 2;
 		int min = 1;
 		int nroRandom = random.nextInt(max + min) + min;
-		System.out.println("nro random: " + nroRandom);
 		decidirPowerUp(nroRandom);
 	}
 	
